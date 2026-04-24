@@ -44,6 +44,8 @@ export function AnimatedBackground() {
             "radial-gradient(ellipse at center, black 30%, transparent 75%)",
         }}
       />
+      {/* Sparkling stars */}
+      <Starfield />
       {/* Vignette */}
       <div
         aria-hidden
