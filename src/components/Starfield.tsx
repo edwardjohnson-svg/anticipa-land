@@ -75,7 +75,7 @@ export function Starfield() {
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
       {/* Slow parallax layer */}
-      <div className="animate-star-drift-slow absolute inset-0">
+      <div className="absolute inset-0">
         {tinyStars.map((star, i) => (
           <span
             key={`t-${i}`}
