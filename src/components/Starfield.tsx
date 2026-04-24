@@ -7,51 +7,117 @@ type Star = {
   duration: number;
   delay: number;
   opacity: number;
+  hue: "white" | "blue" | "violet";
 };
 
-function makeStars(count: number, seed: number): Star[] {
-  // Simple seeded pseudo-random so SSR and client produce the same output.
+function seededRandom(seed: number) {
   let s = seed;
-  const rand = () => {
+  return () => {
     s = (s * 9301 + 49297) % 233280;
     return s / 233280;
   };
+}
+
+function makeStars(count: number, seed: number): Star[] {
+  const rand = seededRandom(seed);
+  return Array.from({ length: count }, (_, i) => {
+    const r = rand();
+    const hue: Star["hue"] = r < 0.7 ? "white" : r < 0.88 ? "blue" : "violet";
+    return {
+      top: `${rand() * 100}%`,
+      left: `${rand() * 100}%`,
+      size: 0.6 + rand() * 2.4,
+      duration: 1.6 + rand() * 4.5,
+      delay: rand() * 6,
+      opacity: 0.35 + rand() * 0.65,
+      hue,
+    };
+  });
+}
+
+type Shooting = {
+  top: string;
+  left: string;
+  delay: number;
+  duration: number;
+  angle: number;
+  length: number;
+};
+
+function makeShootingStars(count: number, seed: number): Shooting[] {
+  const rand = seededRandom(seed);
   return Array.from({ length: count }, () => ({
-    top: `${rand() * 100}%`,
-    left: `${rand() * 100}%`,
-    size: 1 + rand() * 2.5,
-    duration: 2 + rand() * 4,
-    delay: rand() * 5,
-    opacity: 0.4 + rand() * 0.6,
+    top: `${rand() * 60}%`,
+    left: `${rand() * 80}%`,
+    delay: rand() * 14,
+    duration: 2 + rand() * 2.5,
+    angle: 15 + rand() * 25,
+    length: 120 + rand() * 180,
   }));
 }
 
+const colorFor = (hue: Star["hue"]) =>
+  hue === "blue"
+    ? "oklch(0.88 0.13 220)"
+    : hue === "violet"
+      ? "oklch(0.85 0.16 300)"
+      : "oklch(0.98 0.01 250)";
+
 export function Starfield() {
-  const smallStars = useMemo(() => makeStars(80, 12345), []);
-  const bigStars = useMemo(() => makeStars(20, 67890), []);
+  const tinyStars = useMemo(() => makeStars(180, 12345), []);
+  const midStars = useMemo(() => makeStars(70, 67890), []);
+  const bigStars = useMemo(() => makeStars(18, 24680), []);
+  const shooting = useMemo(() => makeShootingStars(5, 13579), []);
 
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
-      <div className="animate-star-drift absolute inset-0">
-        {smallStars.map((star, i) => (
+      {/* Slow parallax layer */}
+      <div className="animate-star-drift-slow absolute inset-0">
+        {tinyStars.map((star, i) => (
           <span
-            key={`s-${i}`}
-            className="animate-twinkle absolute rounded-full bg-white"
+            key={`t-${i}`}
+            className="animate-twinkle absolute rounded-full"
             style={{
               top: star.top,
               left: star.left,
               width: `${star.size}px`,
               height: `${star.size}px`,
+              background: colorFor(star.hue),
               opacity: star.opacity,
               animationDuration: `${star.duration}s`,
               animationDelay: `${star.delay}s`,
-              boxShadow: "0 0 4px rgba(255,255,255,0.8)",
+              boxShadow: `0 0 ${star.size * 2}px ${colorFor(star.hue)}`,
             }}
           />
         ))}
+      </div>
+
+      {/* Mid layer */}
+      <div className="animate-star-drift absolute inset-0">
+        {midStars.map((star, i) => (
+          <span
+            key={`m-${i}`}
+            className="animate-twinkle absolute rounded-full"
+            style={{
+              top: star.top,
+              left: star.left,
+              width: `${star.size + 0.6}px`,
+              height: `${star.size + 0.6}px`,
+              background: colorFor(star.hue),
+              opacity: star.opacity,
+              animationDuration: `${star.duration}s`,
+              animationDelay: `${star.delay}s`,
+              boxShadow: `0 0 ${(star.size + 1) * 3}px ${colorFor(star.hue)}`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Bright foreground stars with cross-glow */}
+      <div className="animate-star-drift-fast absolute inset-0">
         {bigStars.map((star, i) => (
           <span
             key={`b-${i}`}
@@ -59,18 +125,39 @@ export function Starfield() {
             style={{
               top: star.top,
               left: star.left,
-              width: `${star.size + 1.5}px`,
-              height: `${star.size + 1.5}px`,
-              background: "oklch(0.95 0.08 210)",
+              width: `${star.size + 1.8}px`,
+              height: `${star.size + 1.8}px`,
+              background: "white",
               opacity: star.opacity,
               animationDuration: `${star.duration}s`,
               animationDelay: `${star.delay}s`,
-              boxShadow:
-                "0 0 8px oklch(0.78 0.16 210 / 0.9), 0 0 16px oklch(0.7 0.18 300 / 0.6)",
+              boxShadow: `0 0 10px white, 0 0 20px ${colorFor(star.hue)}, 0 0 40px ${colorFor(star.hue)}`,
             }}
           />
         ))}
       </div>
+
+      {/* Shooting stars */}
+      {shooting.map((s, i) => (
+        <span
+          key={`sh-${i}`}
+          className="animate-shooting absolute block"
+          style={{
+            top: s.top,
+            left: s.left,
+            width: `${s.length}px`,
+            height: "1.5px",
+            background:
+              "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 60%, white 100%)",
+            transform: `rotate(${s.angle}deg)`,
+            transformOrigin: "left center",
+            animationDelay: `${s.delay}s`,
+            animationDuration: `${s.duration}s`,
+            filter: "drop-shadow(0 0 6px white)",
+            opacity: 0,
+          }}
+        />
+      ))}
     </div>
   );
 }
