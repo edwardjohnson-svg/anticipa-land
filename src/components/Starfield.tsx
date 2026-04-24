@@ -75,7 +75,7 @@ export function Starfield() {
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
       {/* Slow parallax layer */}
-      <div className="animate-star-drift-slow absolute inset-0">
+      <div className="absolute inset-0">
         {tinyStars.map((star, i) => (
           <span
             key={`t-${i}`}
@@ -96,7 +96,7 @@ export function Starfield() {
       </div>
 
       {/* Mid layer */}
-      <div className="animate-star-drift absolute inset-0">
+      <div className="absolute inset-0">
         {midStars.map((star, i) => (
           <span
             key={`m-${i}`}
@@ -117,7 +117,7 @@ export function Starfield() {
       </div>
 
       {/* Bright foreground stars with cross-glow */}
-      <div className="animate-star-drift-fast absolute inset-0">
+      <div className="absolute inset-0">
         {bigStars.map((star, i) => (
           <span
             key={`b-${i}`}
