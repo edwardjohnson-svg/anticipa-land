@@ -1,4 +1,5 @@
 import heroBg from "@/assets/hero-bg.jpg";
+import { Starfield } from "./Starfield";
 
 export function AnimatedBackground() {
   return (
