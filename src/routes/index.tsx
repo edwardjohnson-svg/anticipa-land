@@ -43,7 +43,7 @@ function scrollToId(id: string) {
 
 function ComingSoon() {
   return (
-    <main className="relative flex min-h-screen flex-col overflow-x-hidden bg-background">
+    <main className="relative flex min-h-screen flex-col overflow-x-hidden">
       <AnimatedBackground />
 
       {/* Top bar */}
