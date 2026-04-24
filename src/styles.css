@@ -192,8 +192,18 @@
   from { background-position: 0 0; }
   to { background-position: 60px 60px; }
 }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+@keyframes star-drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-40px); }
+}
 
 .animate-float-orb { animation: float-orb 18s ease-in-out infinite; }
 .animate-pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
 .animate-fade-up { animation: fade-up 0.9s cubic-bezier(0.4, 0, 0.2, 1) both; }
 .animate-grid-drift { animation: grid-drift 20s linear infinite; }
+.animate-twinkle { animation: twinkle ease-in-out infinite; }
+.animate-star-drift { animation: star-drift 30s ease-in-out infinite alternate; }
