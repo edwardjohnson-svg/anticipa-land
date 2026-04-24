@@ -117,7 +117,7 @@ export function Starfield() {
       </div>
 
       {/* Bright foreground stars with cross-glow */}
-      <div className="animate-star-drift-fast absolute inset-0">
+      <div className="absolute inset-0">
         {bigStars.map((star, i) => (
           <span
             key={`b-${i}`}
