@@ -2,95 +2,227 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { SignupForm } from "@/components/SignupForm";
 import { SocialLinks } from "@/components/SocialLinks";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Workflow, BrainCircuit, Plug, ArrowRight } from "lucide-react";
 
-// Easy to swap — update these with your real brand info.
 const COMPANY = {
-  name: "Your Company",
-  tagline: "Something extraordinary is on the way",
+  name: "EliTech Nexus",
+  shortName: "EliTech",
+  tagline: "The AI operating layer for modern business",
   description:
-    "We're building the next generation of tools to reshape how teams work, create, and ship. Be the first to know when we go live.",
+    "EliTech Nexus is building Eli AI — a proactive AI operating layer that automates workflows, sharpens decision-making, and executes real operational tasks across your CRM, email, and internal systems.",
 };
+
+const NAV = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "features", label: "Capabilities" },
+  { id: "notify", label: "Get notified" },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: `${COMPANY.name} — Coming Soon` },
+      { title: `${COMPANY.name} — Proactive AI for Business | Coming Soon` },
       {
         name: "description",
-        content: `${COMPANY.tagline}. Sign up to get notified when ${COMPANY.name} launches.`,
+        content:
+          "EliTech Nexus is building Eli AI, an AI operating layer that automates workflows and executes real tasks across CRM, email, and internal tools. Join the waitlist.",
       },
-      { property: "og:title", content: `${COMPANY.name} — Coming Soon` },
+      { property: "og:title", content: `${COMPANY.name} — Proactive AI for Business` },
       { property: "og:description", content: COMPANY.tagline },
+      { property: "og:type", content: "website" },
     ],
   }),
   component: ComingSoon,
 });
 
+function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function ComingSoon() {
   return (
-    <main className="relative flex min-h-screen flex-col overflow-hidden bg-background">
+    <main className="relative flex min-h-screen flex-col overflow-x-hidden bg-background">
       <AnimatedBackground />
 
       {/* Top bar */}
-      <header className="relative z-10 flex items-center justify-between px-6 py-8 sm:px-12">
-        <div className="flex items-center gap-2">
+      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border/40 bg-background/40 px-6 py-4 backdrop-blur-xl sm:px-12">
+        <button
+          onClick={() => scrollToId("home")}
+          className="flex items-center gap-2 transition-smooth hover:opacity-80"
+          aria-label="EliTech Nexus home"
+        >
           <div className="bg-gradient-primary flex h-9 w-9 items-center justify-center rounded-xl shadow-glow">
             <Sparkles className="h-4 w-4 text-primary-foreground" />
           </div>
           <span className="text-sm font-semibold tracking-wide text-foreground">
             {COMPANY.name}
           </span>
-        </div>
-        <span className="hidden text-xs uppercase tracking-[0.25em] text-muted-foreground sm:inline">
-          Launching soon
-        </span>
+        </button>
+
+        <nav className="hidden items-center gap-1 md:flex">
+          {NAV.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToId(item.id)}
+              className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-smooth hover:bg-card/40 hover:text-foreground"
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+
+        <button
+          onClick={() => scrollToId("notify")}
+          className="bg-gradient-primary hidden h-9 items-center gap-1.5 rounded-full px-4 text-xs font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.03] sm:inline-flex"
+        >
+          Join waitlist
+          <ArrowRight className="h-3.5 w-3.5" />
+        </button>
       </header>
 
       {/* Hero */}
-      <section className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 py-12 text-center sm:px-12">
+      <section
+        id="home"
+        className="relative z-10 flex min-h-[88vh] flex-col items-center justify-center px-6 py-16 text-center sm:px-12"
+      >
         <div
           className="animate-fade-up mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-card/30 px-4 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur-md"
           style={{ animationDelay: "0.05s" }}
         >
           <span className="animate-pulse-glow inline-block h-1.5 w-1.5 rounded-full bg-primary" />
-          Coming Soon
+          Coming Soon · Early access opening
         </div>
 
         <h1
-          className="animate-fade-up max-w-4xl text-5xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
+          className="animate-fade-up max-w-5xl text-5xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
           style={{ animationDelay: "0.15s" }}
         >
-          {COMPANY.tagline.split(" ").slice(0, -2).join(" ")}{" "}
-          <span className="text-gradient-primary">
-            {COMPANY.tagline.split(" ").slice(-2).join(" ")}
-          </span>
+          The AI operating layer for{" "}
+          <span className="text-gradient-primary">modern business</span>
         </h1>
 
         <p
-          className="animate-fade-up mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+          className="animate-fade-up mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
           style={{ animationDelay: "0.3s" }}
         >
-          {COMPANY.description}
+          Meet <span className="font-semibold text-foreground">Eli AI</span> — a proactive
+          intelligence that automates workflows, optimizes decisions, and executes real
+          operational tasks across the tools your team already uses.
         </p>
 
         <div
-          className="animate-fade-up mt-12 flex w-full justify-center"
-          style={{ animationDelay: "0.45s" }}
+          className="animate-fade-up mt-10 flex flex-wrap items-center justify-center gap-3"
+          style={{ animationDelay: "0.4s" }}
         >
+          <button
+            onClick={() => scrollToId("notify")}
+            className="bg-gradient-primary inline-flex h-12 items-center gap-2 rounded-full px-7 text-sm font-semibold text-primary-foreground shadow-glow transition-smooth hover:scale-[1.03] hover:shadow-glow-accent"
+          >
+            Get notified at launch
+            <ArrowRight className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => scrollToId("about")}
+            className="inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card/30 px-7 text-sm font-semibold text-foreground backdrop-blur-md transition-smooth hover:bg-card/60"
+          >
+            Learn more
+          </button>
+        </div>
+      </section>
+
+      {/* About */}
+      <section
+        id="about"
+        className="relative z-10 mx-auto w-full max-w-5xl scroll-mt-24 px-6 py-24 sm:px-12"
+      >
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground backdrop-blur-md">
+          About
+        </div>
+        <h2 className="max-w-3xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+          An AI that doesn't just answer —{" "}
+          <span className="text-gradient-primary">it operates.</span>
+        </h2>
+        <p className="mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          {COMPANY.description}
+        </p>
+        <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          We believe the next leap in productivity won't come from another chatbot — it will
+          come from an AI layer that understands your business context and acts on it,
+          continuously and autonomously.
+        </p>
+      </section>
+
+      {/* Capabilities */}
+      <section
+        id="features"
+        className="relative z-10 mx-auto w-full max-w-6xl scroll-mt-24 px-6 py-24 sm:px-12"
+      >
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground backdrop-blur-md">
+          Capabilities
+        </div>
+        <h2 className="max-w-3xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+          What Eli AI does for your team
+        </h2>
+
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              icon: Workflow,
+              title: "Workflow automation",
+              desc: "Eli AI handles repetitive operational work end-to-end — across departments, tools, and time zones.",
+            },
+            {
+              icon: BrainCircuit,
+              title: "Smarter decisions",
+              desc: "Real-time signals from your stack, synthesized into clear recommendations and proactive actions.",
+            },
+            {
+              icon: Plug,
+              title: "Plugs into your stack",
+              desc: "Connects to your CRM, email, and internal systems to execute real tasks, not just suggest them.",
+            },
+          ].map((f) => (
+            <div
+              key={f.title}
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card/30 p-6 backdrop-blur-md transition-smooth hover:-translate-y-1 hover:border-primary/40 hover:bg-card/50"
+            >
+              <div className="bg-gradient-primary mb-5 flex h-11 w-11 items-center justify-center rounded-xl shadow-glow">
+                <f.icon className="h-5 w-5 text-primary-foreground" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">{f.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Notify / Signup */}
+      <section
+        id="notify"
+        className="relative z-10 mx-auto w-full max-w-3xl scroll-mt-24 px-6 py-24 text-center sm:px-12"
+      >
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground backdrop-blur-md">
+          Get notified
+        </div>
+        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+          Be first to access <span className="text-gradient-primary">Eli AI</span>
+        </h2>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          Join the waitlist and we'll reach out the moment early access opens.
+        </p>
+
+        <div className="mt-10 flex justify-center">
           <SignupForm />
         </div>
-
-        <p
-          className="animate-fade-up mt-5 text-xs text-muted-foreground/70"
-          style={{ animationDelay: "0.55s" }}
-        >
+        <p className="mt-5 text-xs text-muted-foreground/70">
           No spam. Unsubscribe anytime.
         </p>
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 flex flex-col items-center justify-between gap-6 px-6 py-8 sm:flex-row sm:px-12">
+      <footer className="relative z-10 mt-auto flex flex-col items-center justify-between gap-6 border-t border-border/40 px-6 py-8 sm:flex-row sm:px-12">
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
         </p>
