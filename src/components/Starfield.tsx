@@ -96,7 +96,7 @@ export function Starfield() {
       </div>
 
       {/* Mid layer */}
-      <div className="animate-star-drift absolute inset-0">
+      <div className="absolute inset-0">
         {midStars.map((star, i) => (
           <span
             key={`m-${i}`}
