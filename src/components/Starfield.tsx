@@ -26,10 +26,10 @@ function makeStars(count: number, seed: number): Star[] {
     return {
       top: `${rand() * 100}%`,
       left: `${rand() * 100}%`,
-      size: 0.6 + rand() * 1.8,
+      size: 1.2 + rand() * 2,
       duration: 5 + rand() * 7,
       delay: rand() * 10,
-      opacity: 0.25 + rand() * 0.4,
+      opacity: 0.6 + rand() * 0.4,
       hue,
     };
   });
