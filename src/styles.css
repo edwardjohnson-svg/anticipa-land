@@ -193,8 +193,8 @@
   to { background-position: 60px 60px; }
 }
 @keyframes twinkle {
-  0%, 100% { opacity: 0.35; transform: scale(0.95); }
-  50% { opacity: 0.7; transform: scale(1.05); }
+  0%, 100% { opacity: 0.45; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.15); }
 }
 @keyframes star-drift {
   from { transform: translate3d(0, 0, 0); }
