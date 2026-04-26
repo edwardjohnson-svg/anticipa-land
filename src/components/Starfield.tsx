@@ -136,27 +136,6 @@ export function Starfield() {
         ))}
       </div>
 
-      {/* Shooting stars */}
-      {shooting.map((s, i) => (
-        <span
-          key={`sh-${i}`}
-          className="animate-shooting absolute block"
-          style={{
-            top: s.top,
-            left: s.left,
-            width: `${s.length}px`,
-            height: "1.5px",
-            background:
-              "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 60%, white 100%)",
-            transform: `rotate(${s.angle}deg)`,
-            transformOrigin: "left center",
-            animationDelay: `${s.delay}s`,
-            animationDuration: `${s.duration}s`,
-            filter: "drop-shadow(0 0 6px white)",
-            opacity: 0,
-          }}
-        />
-      ))}
     </div>
   );
 }
