@@ -67,7 +67,6 @@ export function Starfield() {
   const tinyStars = useMemo(() => makeStars(180, 12345), []);
   const midStars = useMemo(() => makeStars(70, 67890), []);
   const bigStars = useMemo(() => makeStars(18, 24680), []);
-  const shooting = useMemo(() => makeShootingStars(5, 13579), []);
 
   return (
     <div
