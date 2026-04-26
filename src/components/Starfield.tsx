@@ -71,7 +71,7 @@ export function Starfield() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
     >
       {/* Slow parallax layer */}
       <div className="absolute inset-0">
