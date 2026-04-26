@@ -64,9 +64,9 @@ const colorFor = (hue: Star["hue"]) =>
       : "oklch(0.98 0.01 250)";
 
 export function Starfield() {
-  const tinyStars = useMemo(() => makeStars(180, 12345), []);
-  const midStars = useMemo(() => makeStars(70, 67890), []);
-  const bigStars = useMemo(() => makeStars(18, 24680), []);
+  const tinyStars = useMemo(() => makeStars(45, 12345), []);
+  const midStars = useMemo(() => makeStars(18, 67890), []);
+  const bigStars = useMemo(() => makeStars(6, 24680), []);
 
   return (
     <div
